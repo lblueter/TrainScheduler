@@ -66,7 +66,7 @@ database.ref("Trains").on("child_added", function (childSnap) {
     var iHateDateFNS = dateFns.addMinutes(new Date(), minutesTill)
     var nextArrival = format(iHateDateFNS, 'HH:mm')
 
-    console.log(remainder)
+    // console.log(remainder)
     console.log(minutesTill)
     console.log(nextArrival)
     
