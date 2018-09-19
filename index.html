@@ -7,8 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Stay on Track!</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous">
+    crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://cdn.date-fns.org/v1.0.0/date_fns.min.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
@@ -49,9 +50,9 @@
                     <label>Destination</label>
                     <input id="destInput" type="text">
                     <label>First Train Time</label>
-                    <input id="trainTimeInput" type="text">
+                    <input id="trainTimeInput" type="time">
                     <label>Frequency</label>
-                    <input id="freqInput" type="text">
+                    <input id="freqInput" type="number">
                     <button id="submit" class="btn btn-primary" type="button">Submit</button>
                 </form>
             </div>
