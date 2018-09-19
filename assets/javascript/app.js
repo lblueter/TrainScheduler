@@ -54,6 +54,7 @@ database.ref("Trains").on("child_added", function (childSnap) {
     console.log(time)
     console.log(freq)
 
+    // My math is wrong somewhere aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     var newTime = new Date()
     var newTimeHours = dateFns.setHours(newTime, hoursnMinutes[0])
     var newTimeMinutes = dateFns.setMinutes(newTimeHours, hoursnMinutes[1])
