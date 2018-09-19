@@ -27,48 +27,12 @@ $(document).on("click", "#submit", function () {
     var dest = $("#destInput").val().trim()
     var freq = $("#freqInput").val().trim()
     var time = $("#trainTimeInput").val().trim();
-    var hoursnMinutes = time.split(":")
-    console.log(hoursnMinutes)
-    console.log(time)
-    console.log(freq)
-    // var formatedTime = format(time, 'HH:mm')
-    var currentTime = format(date.getTime(), 'HH:mm')
-
-    var newTime = new Date()
-
-    var newTimeHours = dateFns.setHours(newTime, hoursnMinutes[0])
-
-    var newTimeMinutes = dateFns.setMinutes(newTimeHours, hoursnMinutes[1])
-
-    console.log(currentTime)
-    // console.log(formatedTime)
-    // var hours = Number(time.match(/^(\d+)/)[1]);
-    // var minutes = Number(time.match(/:(\d+)/)[1]);
-    // var AMPM = time.match(/\s(.*)$/)[1];
-    // if (AMPM == "PM" && hours < 12) hours = hours + 12;
-    // if (AMPM == "AM" && hours == 12) hours = hours - 12;
-    // var sHours = hours.toString();
-    // var sMinutes = minutes.toString();
-    // if (hours < 10) sHours = "0" + sHours;
-    // if (minutes < 10) sMinutes = "0" + sMinutes;
-    // var hoursMinutes = sHours + ":" + sMinutes;
-    var differenceInMinutes = dateFns.differenceInMinutes
-    var remainder = differenceInMinutes(newTimeMinutes, new Date ()) % freq
-    console.log(remainder)
-    var minutesTill = freq - remainder
-    var iHateDateFNS = dateFns.addMinutes(new Date(), minutesTill)
-    var nextArrival = format(iHateDateFNS, 'HH:mm')
-
-
-    console.log(minutesTill)
-    console.log(nextArrival)
     
     var trainInfo = {
         name: name,
         dest: dest,
         freq: freq,
-        nextArrival: nextArrival,
-        minutesTill: minutesTill,
+        time: time,
     }
 
     database.ref("Trains").push(trainInfo)
@@ -83,9 +47,26 @@ database.ref("Trains").on("child_added", function (childSnap) {
     var name = childSnap.val().name
     var dest = childSnap.val().dest
     var freq = childSnap.val().freq
-    var nextArrival = childSnap.val().nextArrival
-    var minutesTill = childSnap.val().minutesTill
+    var time = childSnap.val().time
 
+    var hoursnMinutes = time.split(":")
+    console.log(hoursnMinutes)
+    console.log(time)
+    console.log(freq)
+
+    var newTime = new Date()
+    var newTimeHours = dateFns.setHours(newTime, hoursnMinutes[0])
+    var newTimeMinutes = dateFns.setMinutes(newTimeHours, hoursnMinutes[1])
+    var differenceInMinutes = dateFns.differenceInMinutes
+    var remainder = differenceInMinutes(newTimeMinutes, new Date ()) % freq
+    var minutesTill = freq - remainder
+    var iHateDateFNS = dateFns.addMinutes(new Date(), minutesTill)
+    var nextArrival = format(iHateDateFNS, 'HH:mm')
+
+    console.log(remainder)
+    console.log(minutesTill)
+    console.log(nextArrival)
+    
     var newRow = $("<tr>")
     var newName = $("<td>")
     var newDestination = $("<td>")
