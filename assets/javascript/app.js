@@ -59,8 +59,10 @@ database.ref("Trains").on("child_added", function (childSnap) {
     var newTimeHours = dateFns.setHours(newTime, hoursnMinutes[0])
     var newTimeMinutes = dateFns.setMinutes(newTimeHours, hoursnMinutes[1])
     var differenceInMinutes = dateFns.differenceInMinutes
-    var remainder = differenceInMinutes(newTimeMinutes, new Date ()) % freq
-    var minutesTill = freq - remainder
+
+    var minutesSinceFirstArrival = differenceInMinutes(newTimeMinutes, new Date ())
+    var minutesSinceLastArrival = minutesSinceFirstArrival % freq
+    var minutesTill = freq - minutesSinceLastArrival
     var iHateDateFNS = dateFns.addMinutes(new Date(), minutesTill)
     var nextArrival = format(iHateDateFNS, 'HH:mm')
 
