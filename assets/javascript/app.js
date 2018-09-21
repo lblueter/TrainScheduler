@@ -32,15 +32,16 @@ $(document).on("click", "#submit", function () {
     console.log(hoursnMinutes)
     console.log(time)
     console.log(freq)
-    var newTime = new Date()
-    var newTimeHours = dateFns.setHours(newTime, hoursnMinutes[0])
-    var newTimeMinutes = dateFns.setMinutes(newTimeHours, hoursnMinutes[1])
-    
+    // var newTime = new Date()
+    // var newTimeHours = dateFns.setHours(newTime, hoursnMinutes[0])
+    // var newTimeMinutes = dateFns.setMinutes(newTimeHours, hoursnMinutes[1])
+    var newTime = dateFns.setHours(dateFns.setMinutes(new Date (), hoursnMinutes[1]), hoursnMinutes[0])
+    console.log(newTime)
     var trainInfo = {
         name: name,
         dest: dest,
         freq: freq,
-        time: time,
+        newTime: newTime.toString()
     }
 
     database.ref("Trains").push(trainInfo)
@@ -55,7 +56,8 @@ database.ref("Trains").on("child_added", function (childSnap) {
     var name = childSnap.val().name
     var dest = childSnap.val().dest
     var freq = childSnap.val().freq
-    var time = childSnap.val().time
+    var time = childSnap.val().newTime
+    console.log(time)
 
     
 
@@ -63,7 +65,7 @@ database.ref("Trains").on("child_added", function (childSnap) {
     
     var differenceInMinutes = dateFns.differenceInMinutes
 
-    var minutesSinceFirstArrival = differenceInMinutes(new Date(), newTimeMinutes)
+    var minutesSinceFirstArrival = differenceInMinutes(new Date(), time)
     var minutesSinceLastArrival = minutesSinceFirstArrival % freq
     var minutesTill = freq - minutesSinceLastArrival
     var iHateDateFNS = dateFns.addMinutes(new Date(), minutesTill)
