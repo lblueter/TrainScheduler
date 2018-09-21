@@ -28,6 +28,14 @@ $(document).on("click", "#submit", function () {
     var freq = $("#freqInput").val().trim()
     var time = $("#trainTimeInput").val().trim();
     
+    var hoursnMinutes = time.split(":")
+    console.log(hoursnMinutes)
+    console.log(time)
+    console.log(freq)
+    var newTime = new Date()
+    var newTimeHours = dateFns.setHours(newTime, hoursnMinutes[0])
+    var newTimeMinutes = dateFns.setMinutes(newTimeHours, hoursnMinutes[1])
+    
     var trainInfo = {
         name: name,
         dest: dest,
@@ -49,18 +57,13 @@ database.ref("Trains").on("child_added", function (childSnap) {
     var freq = childSnap.val().freq
     var time = childSnap.val().time
 
-    var hoursnMinutes = time.split(":")
-    console.log(hoursnMinutes)
-    console.log(time)
-    console.log(freq)
+    
 
     // My math is wrong somewhere aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    var newTime = new Date()
-    var newTimeHours = dateFns.setHours(newTime, hoursnMinutes[0])
-    var newTimeMinutes = dateFns.setMinutes(newTimeHours, hoursnMinutes[1])
+    
     var differenceInMinutes = dateFns.differenceInMinutes
 
-    var minutesSinceFirstArrival = differenceInMinutes(newTimeMinutes, new Date ())
+    var minutesSinceFirstArrival = differenceInMinutes(new Date(), newTimeMinutes)
     var minutesSinceLastArrival = minutesSinceFirstArrival % freq
     var minutesTill = freq - minutesSinceLastArrival
     var iHateDateFNS = dateFns.addMinutes(new Date(), minutesTill)
